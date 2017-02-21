@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Towed Car Data </title>
+</head>
+
+<body>
+    <h1>Towed Car Data</h1>
+    <button id="submit">Submit</button>
+    <div id="results"></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        /*
+                        This script retrieves the towed data information
+                        from the City of Chicago Data Portal
+                        
+                        You are required to enter the information for your vehicle
+                        as a license plate number
+                    
+                    */
+
+        var vehicle;
+
+        $(function() {
+
+                $("#submit").click(function() {
+
+                        var html = "";
+
+                        // base URL to the food inspections data
+                        var baseURL = 'https://data.cityofchicago.org/resource/rp42-fxjt.json';
+
+                        // optional filters we're appending - date range and zip
+                        var filters = "";
+
+                        // full URL
+                        var url = baseURL;
+
+                        $.getJSON(url).done(function(data) {
+                            // TODO:  add script to add data to the DOM
+                            console.log(data);
+                            // loop through the records
+
+                            vehicle = data;
+
+                             var date = vehicle[0].tow_date;
+
+                             var doty = 0,
+                                    sacra = 0,
+                                    wack = 0,
+                                    air = 0,
+                                    pound = 0;
+
+                           if (vehicle.length == 0) {
+                                    var html = "<p> Sorry, we couldn't find your request.</p>";
+                                    $("#map").append(html);
+                                }
+                                else {
+                                    $.each(vehicle, function(index, value) {
+                                            
+
+                                                if (value.tow_date == date) {
+                                                    var spot = value.towed_to_address;
+                                                    if (spot == "10300 S. Doty")
+                                                        doty++;
+                                                    else if (spot == "701 N. Sacramento")
+                                                        sacra++;
+                                                    else if (spot == "400 E. Lower Wacker")
+                                                        wack++;
+                                                    else if (spot == "Chicago O'hare International Airport lot E.")
+                                                        air++;
+                                                    else (spot == "Police Pound");
+                                                        pound++;
+                                                }                
+                                                // Load the Visualization API and the corechart package.
+                          google.charts.load('current', {'packages':['corechart']});
+                    
+                          // Set a callback to run when the Google Visualization API is loaded.
+                          google.charts.setOnLoadCallback(drawChart);
+                     function drawChart() {
+                    
+                            // Create the data table.
+                            var data = new google.visualization.DataTable();
+                            data.addColumn('string', 'Car tow address');
+                            data.addColumn('number', 'Quantity');
+                            data.addRows([
+                              ['10300 S. Doty', doty],
+                              ['701 N. Sacramento', sacra],
+                              ['400 E. Lower Wacker', wack],
+                              ["Chicago O'hare International Airport lot E.", air],
+                              ['Police Pound', pound]
+                            ]);
+                    
+                            // Set chart options
+                            var options = {'title':'Towed cars by address on ' + date,
+                                           'width':500,
+                                           'height':400};
+                    
+                            // Instantiate and draw our chart, passing in some options.
+                            var chart = new google.visualization.PieChart(document.getElementById('results'));
+                            chart.draw(data, options);
+                          }
+                        
+                        
+                                                    
+
+                                                }
+                                            );
+
+                                    }
+
+                            //$("#results").html(html);
+
+                        }); // end of getJSON function
+
+                    }) // end of click function
+
+            }) // end of ready command
+    </script>
+</body>
+
+</html>
