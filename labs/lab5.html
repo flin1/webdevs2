@@ -52,7 +52,7 @@
                         html = "No reports made on "+ date;
                     } else{
                      $.each(tree, function(index, value) {
-                                        if (value.tow_date == date) {
+                                        if (value.creation_date == date) {
                                             var stat = value.if_yes_where_is_the_debris_located_;
                                             if (stat == "Parkway")
                                                 park++;
@@ -78,7 +78,7 @@
 
                                         // Create the data table.
                                         var data = new google.visualization.DataTable();
-                                        data.addColumn('string', 'Tree Service Request spot');
+                                        data.addColumn('string', 'Tree Service Requests');
                                         data.addColumn('number', 'Quantity');
                                         data.addRows([
                                             ['Parkway', park],
@@ -88,7 +88,7 @@
 
                                         // Set chart options
                                         var options = {
-                                            'title': 'Statuses of different tree service requests on ' + date,
+                                            'title': 'Spot of different tree service requests on ' + date,
                                             'width': 400,
                                             'height': 300
                                         };
