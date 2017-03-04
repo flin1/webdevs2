@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Eczar" rel="stylesheet">
+<style>
+  h1,p,h3{
+    font-family: 'Eczar', serif;
+  }
+  button{
+  font-family: 'Eczar', serif;
+  }
+</style>
+</head>
+
+<body>
+  <h1>CTA Bus Tracker</h1>
+  <a href="busTracker.html"><button>View arrival times for Western & Addison stops</button></a>
+  <br>
+  <br>
+  <h3>List of Chicago Transit Authority Bus Routes</h3>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script>
+    $(function() {
+
+
+      var apiPassThruUrl = "https://polar-garden-75406.herokuapp.com/apiPassThru.php";
+
+      var apiEndpoint = "http://ctabustracker.com/bustime/api/v2/getroutes";
+
+      $.ajax({
+        url: apiPassThruUrl,
+        dataType: "json",
+        method: 'GET',
+        data: {
+          "apiEndpoint": apiEndpoint,
+          "key": "RVehUg4BC2bGGFHGEQMSv3dhE",
+          "format": "json"
+        }
+      }).done(function(data) {
+        console.log(data);
+        $.each(data["bustime-response"]["routes"], function(i, v) {
+          $("body").append("Route #" + v.rt + ", " + v.rtnm + "<br>");
+
+        });
+
+      });
+    });
+  </script>
+
+</body>
+
+</html>

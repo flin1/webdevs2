@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bus Times</title>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Eczar" rel="stylesheet">
+
+  <style>
+  h1, p{
+    font-family: 'Eczar', serif;
+  }
+  </style>
+</head>
+
+<body>
+  <h3>Bus Times</h3>
+  <select name="numbers" id="stopClick">
+        <option select = "selected"> Choose A Stop</option>
+        <option value = "8417">Route: #49 Western & Addison (Northbound)</option>
+        <option value = "8195">Route: #49 Western & Addison (Southbound)</option>
+        <option value = "12569">Route: #152 Addison & Western (Westbound)</option>
+        <option value = "12527">Route: #152 Addison & Western (Eastbound)</option>
+      </select>
+  <button onclick="myFunction();"> Get Times!</button>
+  <a href="index.html"><button>Go Back</button></a>
+  <div id="output">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+      function myFunction() {
+        $(function() {
+
+          $("#output").html("");
+
+          var apiPassThruUrl = "https://polar-garden-75406.herokuapp.com/apiPassThru.php";
+
+          var apiEndpoint = "http://ctabustracker.com/bustime/api/v2/getpredictions";
+
+          var rt;
+          if ($("#stopclick").val() == "8417", "8195") {
+            rt = "49";
+          }
+          else {
+            rt = "152";
+          }
+          
+
+          $.ajax({
+            url: apiPassThruUrl,
+            dataType: "json",
+            method: 'GET',
+            data: {
+              "apiEndpoint": apiEndpoint,
+              "key": "LZCWiNqYNzjfdW9F9hS82YsfW",
+              "stpid": $("#stopClick").val(),
+              "rtnm": rt,
+              "format": "json"
+            }
+          }).done(function(data) {
+            console.log(data);
+
+
+            $("#output").append("<br><h4>Bus Predictions</h4>");
+
+
+            $.each(data["bustime-response"]["prd"], function(i, v) {
+              $("#output").append(
+                "<p>Stop: " +
+                v.stpnm +
+                "<br>Direction: " +
+                v.rtdir +
+                "<br>Arrival time: " +
+                v.prdtm +
+                "<br>Distance Away: " +
+                v.dstp +
+                " feet<br>Bus ID: " +
+                v.vid +
+                "<br>Route #: " +
+                v.rt +
+                "</p>");
+            });
+
+          });
+
+        });
+      }
+    </script>
+  </div>
+
+</body>
+
+</html>
