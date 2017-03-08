@@ -32,11 +32,26 @@
 body{
   background-color:#ffffff;
 }
+.demo-layout-transparent .mdl-layout__header,
+.demo-layout-transparent .mdl-layout__drawer-button {
+  /* This background is dark, so we set text to white. Use 87% black instead if
+     your background is light. */
+  color: white;
+}
   </style>
 </head>
 
 <body>
-  <h3>Bus Times</h3>
+  <div class="mdl-layout mdl-js-layout">
+  <header class="mdl-layout__header mdl-layout__header--scroll">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Bus Times</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+    </div>
+  </header>
+  </div>
   <select name="numbers" id="stopClick">
         <option select = "selected"> Choose A Stop</option>
         <option value = "8417">Route: #49 Western & Addison (Northbound)</option>
