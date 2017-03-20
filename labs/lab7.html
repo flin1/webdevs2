@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Potholes</title>
+    <style>
+        p,
+        h1 {
+            font-family: times;
+        }
+        
+        p {
+            font-size: 1.5em;
+            line-height: 1.5em;
+            margin-left: 24px;
+        }
+        
+        pre {
+            font-size: 2em;
+        }
+        
+        .Fail {
+            background-color: red;
+        }
+        
+        div {
+            border: 1px solid black;
+            margin: 4px;
+            border-radius: 5px;
+            background-color: #EDEDED;
+        }
+        
+        .Pass {
+            background-color: green;
+        }
+        .template{
+            display:none;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Open Pothole Service Requests</h1>
+    <div class="template potholes">
+        <h1 class="serviceType"></h2>
+        <p>Service Request # :<span class = "number"></span><br>
+           Status : <span class = "status" ></span></p>
+    </div>
+    <div id = "results"></div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+        /*
+                    This script retrieves 311 pothole data 
+                    for the 4th quarter of 2016 from the 
+                    City of Chicago Data Portal
+                    
+                    This script doesn't update the DOM.
+                
+                
+                */
+
+
+        // base URL to the food inspections data
+        var baseURL = 'https://data.cityofchicago.org/resource/787j-mys9.json';
+
+        // optional filters we're appending - date range and zip
+        var filters = '?status=Open&zip=60618';
+
+        // full URL
+        var url = baseURL + filters;
+
+        console.log(url);
+
+        $(
+            // jQuery command to retrieve json data
+
+            $.getJSON(url)
+            .done(function(data) {
+                // TODO:  add script to add data to the DOM
+                console.log(data);
+                
+                var clone;
+                // loop through the records
+                inspections = data;
+
+                $.each(data, function(index, value) {
+                clone = $(".template").clone();
+                clone.removeClass("template");
+                clone.find("serviceType").text(value.type_of_service_request);
+                clone.find(".number").text(value.service_request_number);
+                clone.find(".status").text(value.status);
+                
+                $("#results").append(clone);
+                /*    var html = "<div><h1>" + value.type_of_service_request + "</h1>" + '<p>Status: ' + value.status + "<br>" + "Service Request # :" + value.service_request_number + "</p>" + "<p> Community Area #:" + value.community_area + "</p>" + "<p>Police District #:" + value.police_district + "</p>" + "</div>";
+                    $('body').append(html);*/
+                });
+
+            })
+
+
+        )
+    </script>
+</body>
+
+</html>
