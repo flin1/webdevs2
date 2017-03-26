@@ -1,68 +1,264 @@
 <html>
-  <head>
-    <!-- Material Design Lite -->
-    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-    <!-- Material Design icon font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<head>
+  <!-- Material Design Lite -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <!-- Material Design icon font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
   <style>
-    .screen{
-      display:none;
+    .screen {
+      display: none;
+      font-family: 'Roboto', sans-serif;
+    }
+    
+    .page-content {
+      padding: 15px;
     }
   </style>
-  <title>3 Screen App</title>
-  </head>
-  <body>
-    <!-- Always shows a header, even in smaller screens. -->
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
-      <header class="mdl-layout__header">
-        <div class="mdl-layout__header-row">
-          <!-- Title -->
-          <span class="mdl-layout-title">3 Screen App</span>
-          <!-- Add spacer, to align navigation to the right -->
-          <div class="mdl-layout-spacer"></div>
-          <!-- Navigation. We hide it in small screens. -->
-          <nav class="mdl-navigation mdl-layout--large-screen-only">
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-            <a class="mdl-navigation__link" href="">Link</a>
-          </nav>
-        </div>
-      </header>
-      <div class="mdl-layout__drawer">
-        <span class="mdl-layout-title">Title</span>
-        <nav class="mdl-navigation">
-          <a id = "link1" class="mdl-navigation__link" href="#">Link 1 </a>
-          <a id = "link2" class="mdl-navigation__link" href="#">Link 2 </a>
-          <a id = "link3" class="mdl-navigation__link" href="#">Link 3</a>
-        </nav>
+  <title>Planner App</title>
+</head>
+
+<body>
+  <!-- Always shows a header, even in smaller screens. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">Planner App</span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation. We hide it in small screens. -->
       </div>
-      <main class="mdl-layout__content">
-        <div id = "screen1" class="screen page-content">Screen 1</div>
-        <div id = "screen2" class="screen page-content">Screen 2</div>
-        <div id = "screen3" class="screen page-content">Screen 3</div>
-      </main>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Planner App</span>
+      <nav class="mdl-navigation">
+        <a id="link1" class="mdl-navigation__link" href="#">Reminders </a>
+        <a id="link2" class="mdl-navigation__link" href="#">Notes</a>
+        <a id="link3" class="mdl-navigation__link" href="#">Daily Schedule</a>
+      </nav>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-      <script>
-      $(function(){
-        
-        $("#screen1").show();
-        $("#link1").on("click", function(){
-        $(".screen").hide();
-        $("#screen1").show();        
-        });   
-         $("#link2").on("click", function(){
-        $(".screen").hide();
-        $("#screen2").show();        
-        });   
-         $("#link3").on("click", function(){
-        $(".screen").hide();
-        $("#screen3").show();        
-        });   
+    <main class="mdl-layout__content">
+      <div id="screen1" class="screen page-content">
+        <h3>Welcome!</h3>
+        <h6>Here are your Reminders</h6>
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Date</th>
+              <th>Time</th>
+              <th>Event/Activity</th>
+            </tr>
+          </thead>
+          <tbody id="eventBody">
+          </tbody>
+        </table>
+        <br>
+        <form action="#">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="sample1">
+    <label class="mdl-textfield__label" for="sample1" id = "input">Activity...</label>
+  </div>
+</form>
+<form action="#">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="sample1">
+    <label class="mdl-textfield__label" for="sample1" id="time">Time...</label>
+  </div>
+</form>
+<form action="#">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="sample1">
+    <label class="mdl-textfield__label" for="sample1" id="day">Day...</label>
+  </div>
+</form>
+        <button id="event" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+  Add Event
+</button>
+        <p>*Note: This app only saves data on a browser, so you can only get the same data if you use the same device.</p>
+      </div>
+      <div id="screen2" class="screen page-content">
+        <h3></h3> Your Notes</h3>
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Date</th>
+              <th>Note</th>
+            </tr>
+          </thead>
+          <tbody id="noteBody">
+          </tbody>
+        </table>
+        <br>
+        <form action="#">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="sample3">
+    <label class="mdl-textfield__label" for="sample3" id = "date">Date...</label>
+  </div>
+</form>
+        <form action="#">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="sample3">
+    <label class="mdl-textfield__label" for="sample3" id = "note">Note...</label>
+  </div>
+</form>
+        <input id="note">
+        <button id="enter" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+  Add Note
+</button></div>
+      <div id="screen3" class="screen page-content">
+        <h3>Schedule</h3>
+        <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+          <thead>
+            <tr>
+              <th class="mdl-data-table__cell--non-numeric">Period</th>
+              <th>Class</th>
+            </tr>
+          </thead>
+          <tbody id="courseBody">
+          </tbody>
+        </table>
+        <br>
+        <form action="#">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="sample3">
+    <label class="mdl-textfield__label" for="sample3" id = "period">Period...</label>
+  </div>
+</form>
+<form action="#">
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <input class="mdl-textfield__input" type="text" id="sample3">
+    <label class="mdl-textfield__label" for="sample3" id = "course">Class...</label>
+  </div>
+</form>
+        <button id="click" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+  Add Class
+</button>
+      </div>
+    </main>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+  <script>
+    $(function() {
+      console.log("stuff");
+
+
+      var db = new Dexie('Screen');
+
+      // Define a schema
+      db.version(1).stores({
+        events: '++id,event,date,time'
       });
-      
-    </script>
-  </body>
+      //
+
+      db.events.each(function(event) {
+        console.log(event.event);
+        console.log("Event Clicked");
+
+        var newEvent = "<tr><td></td><td class=\"mdl-data-table__cell--non-numeric\">" + event.date + "</td><td>" + event.time + "</td><td>" + event.event + "</td></tr>";
+        $(newEvent).appendTo($("#eventBody"));
+      });
+      var ndb = new Dexie('Notes');
+
+      // Define a schema
+      ndb.version(1).stores({
+        notes: '++id,date,note'
+      });
+      //
+
+      ndb.notes.each(function(note) {
+        console.log(note.note);
+        console.log("Note Clicked");
+
+        var newNote = "<tr><td></td><td class=\"mdl-data-table__cell--non-numeric\">" + note.date + "</td><td>" + note.note + "</td></tr>";
+        $(newNote).appendTo($("#noteBody"));
+      });
+
+var cdb = new Dexie('Classss');
+
+      // Define a schema
+      cdb.version(1).stores({
+        courses: '++id,period,course'
+      });
+      //
+
+      cdb.courses.each(function(course) {
+        console.log(course.period);
+        console.log("Course Clicked");
+
+        var newCourse = "<tr><td></td><td class=\"mdl-data-table__cell--non-numeric\">" + course.period + "</td><td>" + course.course + "</td></tr>";
+        $(newCourse).appendTo($("#courseBody"));
+      });
+
+
+      $("#screen1").show();
+
+      $("#link1").on("click", function() {
+        $(".screen").hide();
+        $("#screen1").show();
+      });
+
+      $("#event").on("click", function() {
+        var input = $("#input").val();
+        var time = $("#time").val();
+        var day = $("#day").val();
+        db.events.add({
+          event: input,
+          date: day,
+          time: time
+        });
+        var newEvent = "<tr><td></td><td class=\"mdl-data-table__cell--non-numeric\">" + day + "</td><td>" + time + "</td><td>" + input + "</td></tr>";
+        $(newEvent).appendTo($("#eventBody"));
+
+      });
+
+      $('.mdl-navigation__link').click(function() {
+
+        //  the drawer
+        $('.mdl-layout__drawer').toggleClass('is-visible');
+
+        // the transparent overlay that shows when you open the drawer
+        $('.mdl-layout__obfuscator').toggleClass('is-visible');
+
+      });
+
+
+      $("#link2").on("click", function() {
+        $(".screen").hide();
+        $("#screen2").show();
+      });
+      $("#enter").on("click", function() {
+        var date = $("#date").val();
+        var note = $("#note").val();
+        ndb.notes.add({
+          date: date,
+          note: note
+        });
+        var newNote = "<tr><td></td><td class=\"mdl-data-table__cell--non-numeric\">" + date + "</td><td>" + note + "</td></tr>";
+        $(newNote).appendTo($("#noteBody"));
+      });
+
+      $("#link3").on("click", function() {
+        $(".screen").hide();
+        $("#screen3").show();
+      });
+      $("#click").on("click", function() {
+        var period = $("#period").val();
+        var course = $("#course").val();
+        cdb.courses.add({
+          period: period,
+          course: course
+        });
+        var newCourse = "<tr><td></td><td class=\"mdl-data-table__cell--non-numeric\">" + period + "</td><td>" + course + "</td></tr>";
+        $(newCourse).appendTo($("#courseBody"));
+      });
+
+    });
+  </script>
+</body>
+
 </html>
