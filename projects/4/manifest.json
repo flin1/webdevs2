@@ -1,0 +1,15 @@
+{
+  "short_name": "Planner App",
+  "name": "Planner App",
+  "icons": [
+    {
+      "src":"unnamed.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "",
+  "background_color": "#000",
+  "Theme_color": "#536878",
+  "display": ""
+}
