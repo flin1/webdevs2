@@ -59,20 +59,20 @@
         <br>
         <form action="#">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample1">
-    <label class="mdl-textfield__label" for="sample1" id = "input">Activity...</label>
+    <input class="mdl-textfield__input" type="text" id="input">
+    <label class="mdl-textfield__label" for="input">Activity...</label>
   </div>
 </form>
 <form action="#">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample1">
-    <label class="mdl-textfield__label" for="sample1" id="time">Time...</label>
+    <input class="mdl-textfield__input" type="text" id="time">
+    <label class="mdl-textfield__label" for="time">Time...</label>
   </div>
 </form>
 <form action="#">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample1">
-    <label class="mdl-textfield__label" for="sample1" id="day">Day...</label>
+    <input class="mdl-textfield__input" type="text" id="day">
+    <label class="mdl-textfield__label" for="day">Day...</label>
   </div>
 </form>
         <button id="event" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
@@ -95,14 +95,14 @@
         <br>
         <form action="#">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample3">
-    <label class="mdl-textfield__label" for="sample3" id = "date">Date...</label>
+    <input class="mdl-textfield__input" type="text" id="date">
+    <label class="mdl-textfield__label" for="date" >Date...</label>
   </div>
 </form>
         <form action="#">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample3">
-    <label class="mdl-textfield__label" for="sample3" id = "note">Note...</label>
+    <input class="mdl-textfield__input" type="text" id="note">
+    <label class="mdl-textfield__label" for="note" >Note...</label>
   </div>
 </form>
         <input id="note">
@@ -124,14 +124,14 @@
         <br>
         <form action="#">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample3">
-    <label class="mdl-textfield__label" for="sample3" id = "period">Period...</label>
+    <input class="mdl-textfield__input" type="text" id="period">
+    <label class="mdl-textfield__label" for="period">Period...</label>
   </div>
 </form>
 <form action="#">
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <input class="mdl-textfield__input" type="text" id="sample3">
-    <label class="mdl-textfield__label" for="sample3" id = "course">Class...</label>
+    <input class="mdl-textfield__input" type="text" id="course" >
+    <label class="mdl-textfield__label" for="course" >Class...</label>
   </div>
 </form>
         <button id="click" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
@@ -178,7 +178,7 @@
         $(newNote).appendTo($("#noteBody"));
       });
 
-var cdb = new Dexie('Classss');
+var cdb = new Dexie('Classes');
 
       // Define a schema
       cdb.version(1).stores({
@@ -203,6 +203,7 @@ var cdb = new Dexie('Classss');
       });
 
       $("#event").on("click", function() {
+        
         var input = $("#input").val();
         var time = $("#time").val();
         var day = $("#day").val();
@@ -211,6 +212,7 @@ var cdb = new Dexie('Classss');
           date: day,
           time: time
         });
+        console.log(input);
         var newEvent = "<tr><td></td><td class=\"mdl-data-table__cell--non-numeric\">" + day + "</td><td>" + time + "</td><td>" + input + "</td></tr>";
         $(newEvent).appendTo($("#eventBody"));
 
