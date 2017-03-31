@@ -1,0 +1,129 @@
+<html>
+
+<head>
+  <!-- Material Design Lite -->
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <!-- Material Design icon font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+</head>
+
+<body>
+  <!-- Simple header with fixed tabs. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+                mdl-layout--fixed-tabs">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">Chicago City Council Employee Data</span>
+      </div>
+      <!-- Tabs -->
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+        <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Data</a>
+        <a href="#fixed-tab-2" class="mdl-layout__tab">Tab 2</a>
+        <a href="#fixed-tab-3" class="mdl-layout__tab">Tab 3</a>
+      </div>
+    </header>
+
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">City Council Employee Info</span>
+    </div>
+
+    <main class="mdl-layout__content">
+      <section class="mdl-layout__tab-panel is-active" id="fixed-tab-1">
+        <div class="page-content" id="page1">
+          <h2>Chicago City Council Employee Data</h2>
+          <!-- Accent-colored raised button with ripple -->
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="find">
+              <label class="mdl-textfield__label" for="sample3">Find Employee...</label>
+            </div>
+          </form>
+
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="event">Search</button>
+          <div id="result"></div>
+
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="fixed-tab-2">
+        <div class="page-content">
+          <!-- Your content goes here -->
+        </div>
+      </section>
+      <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+        <div class="page-content">
+          <!-- Your content goes here -->
+        </div>
+      </section>
+    </main>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script>
+      var db = new Dexie('employeeDB');
+      // Define a schema
+      db.version(1).stores({
+        employees: '++id, name, title, salary, department'
+      });
+
+      var baseURL = 'https://data.cityofchicago.org/resource/tt4n-kn4t.json';
+
+      // optional filters we're appending - date range and zip
+      var filters = '?department=CITY COUNCIL';
+
+      // full URL
+      var url = baseURL + filters;
+
+      console.log(url);
+
+
+
+
+
+      db.employees.count().then(function(count) {
+        console.log("count");
+
+        if (count == 0) {
+          $.getJSON(url)
+            .done(function(data) {
+              console.log(data);
+              $.each(data, function(index, value) {
+
+                db.employees.add({
+                  name: value.name,
+                  title: value.job_titles,
+                  salary: value.employee_annual_salary,
+                  department: value.department
+                });
+
+              });
+            });
+        }
+      });
+
+      $("#event").click(function(info) {
+        console.log($("#find").val());
+
+        $("#result").empty();
+
+        db.employees
+          .where('name')
+          .startsWithIgnoreCase($("#find").val())
+          .each(function(employees, value) {
+            console.log(employees.name);
+            console.log(employees.department);
+            console.log(employees.title);
+            console.log(employees.salary);
+              var html = "<div><h5>Name: " + employees.name + "<br>Department: " + employees.department + "<br>Job: " + employees.title + "<br>Annual Salary: $" + employees.salary + "</h5></div><hr>";
+              $("#result").append(html);
+            });
+      });
+
+
+
+      // jQuery command to retrieve json data
+    </script>
+  </div>
+</body>
+
+</html>
