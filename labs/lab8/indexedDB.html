@@ -7,7 +7,7 @@
   <!-- Material Design icon font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
-<title>City Council Data</title>
+  <title>City Council Data</title>
 </head>
 
 <body>
@@ -22,7 +22,7 @@
       <!-- Tabs -->
       <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
         <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Data</a>
-        <a href="#fixed-tab-2" class="mdl-layout__tab">Tab 2</a>
+        <a href="#fixed-tab-2" class="mdl-layout__tab">Add Person</a>
         <a href="#fixed-tab-3" class="mdl-layout__tab">Tab 3</a>
       </div>
     </header>
@@ -50,7 +50,34 @@
       </section>
       <section class="mdl-layout__tab-panel" id="fixed-tab-2">
         <div class="page-content">
-          <!-- Your content goes here -->
+          <h3>Add An Employee To The Database</h3>
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="enterName">
+              <label class="mdl-textfield__label" for="sample3">Name...</label>
+            </div>
+          </form>
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="enterJob">
+              <label class="mdl-textfield__label" for="sample3">Job...</label>
+            </div>
+          </form>
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="enterDept">
+              <label class="mdl-textfield__label" for="sample3">Dept...</label>
+            </div>
+          </form>
+          <form action="#">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+              <input class="mdl-textfield__input" type="text" id="enterSal">
+              <label class="mdl-textfield__label" for="sample3">Salary...</label>
+            </div>
+          </form>
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="addEmploy">
+  Add Employee
+</button>
         </div>
       </section>
       <section class="mdl-layout__tab-panel" id="fixed-tab-3">
@@ -75,11 +102,8 @@
       // full URL
       var url = baseURL + filters;
 
+
       console.log(url);
-
-
-
-
 
       db.employees.count().then(function(count) {
         console.log("count");
@@ -115,11 +139,23 @@
             console.log(employees.department);
             console.log(employees.title);
             console.log(employees.salary);
-              var html = "<div><h5>Name: " + employees.name + "<br>Department: " + employees.department + "<br>Job: " + employees.title + "<br>Annual Salary: $" + employees.salary + "</h5></div><hr>";
-              $("#result").append(html);
-            });
+            var html = "<div><h5>Name: " + employees.name + "<br>Department: " + employees.department + "<br>Job: " + employees.title + "<br>Annual Salary: $" + employees.salary + "</h5></div><hr>";
+            $("#result").append(html);
+          });
       });
-
+      $("#addEmploy").click(function(addEmployee) {
+        console.log("added");
+        db.employees.add({
+          name: $("#enterName").val(),
+          title: $("#enterJob").val(),
+          department: $("#enterDept").val(),
+          salary: $("#enterSal").val()
+        });
+        $("#employeeName").val('');
+        $("#employeeDepartment").val('');
+        $("#employeeTitle").val('');
+        $("#employeeSalary").val('');
+      });
 
 
       // jQuery command to retrieve json data
