@@ -1,0 +1,359 @@
+<html>
+
+<head>
+  <!-- Material Design Lite -->
+  <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <!-- Material Design icon font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-red.min.css" />
+  <style>
+    .page-content {
+      padding: 20px;
+    }
+    
+    .screen {
+      display: none;
+    }
+  </style>
+  <title>Bus Tracker</title>
+</head>
+
+<body>
+  <!-- Simple header with fixed tabs. -->
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header
+                mdl-layout--fixed-tabs">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title">Bus Times</span>
+      </div>
+      <!-- Tabs -->
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+        <a href="#fixed-tab-1" class="mdl-layout__tab is-active" id="tab1">Home</a>
+        <a href="#fixed-tab-2" class="mdl-layout__tab" id="tab2">Lane Tech Stops</a>
+        <a href="#fixed-tab-3" class="mdl-layout__tab" id="tab3">Customize</a>
+      </div>
+    </header>
+    <div class="mdl-layout__drawer">
+      <span class="mdl-layout-title">Bus Times</span>
+      <nav class="mdl-navigation">
+        <a id = "link1" class="mdl-navigation__link" href="#">Home</a>
+        <a id = "link2" class="mdl-navigation__link" href="#">Lane Tech Stops</a>
+        <a id = "link3" class="mdl-navigation__link" href="#">Customize</a>
+      </nav>
+    </div>
+    <main class="mdl-layout__content">
+      <section class="mdl-layout__tab-panel is-active screen" id="screen1">
+        <div class="page-content">
+          <h3>CTA Bus Tracker</h3>
+          <h6> Here you can find the times for the next Addison or Western Bus </h6>
+          <h6>Click <b>Lane Tech Stops</b> to find it!</h6>
+          <h6>If you don't want the Addison and Western stops, you can choose your stops in the <b>Customize</b> tab.</h6>
+        </div>
+      </section>
+
+      <section class="mdl-layout__tab-panel screen" id="screen2">
+        <div class="page-content">
+          <h3>Bus Times</h3>
+          <select name="numbers" id="stopClick">
+        <option select = "selected"> Choose A Stop</option>
+        <option value = "8417">Route: #49 Western & Addison (Northbound)</option>
+        <option value = "8195">Route: #49 Western & Addison (Southbound)</option>
+        <option value = "12569">Route: #152 Addison & Western (Westbound)</option>
+        <option value = "12527">Route: #152 Addison & Western (Eastbound)</option>
+      </select>
+
+          <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="times">
+            Get Times!
+          </button>
+          <p> Pick a stop and get the times for it!</p>
+          <br>
+          <div>
+            <h4>Bus Predictions</h4>
+            <hr>
+          </div>
+          <div id="output"></div>
+      </section>
+      <section class="mdl-layout__tab-panel screen" id="screen3">
+        <div class="page-content">
+          <h3>Customize Your Stops</h3>
+          <h6>Use the drop-down to figure out the IDs of the stops you follow.</h6>
+          <div id="buttons">
+            <select name="numbers" id="routeClick">
+              <option select = "selected"> Choose A Route</option>
+            </select>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="route">
+              Enter
+            </button>
+          </div>
+          <div id="inputs">
+            <h6>Then, fill out the following text fields to save your preferences.</h6>
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="routeNum">
+                <label class="mdl-textfield__label" for="sample3">Route Number...</label>
+              </div>
+            </form>
+            <form action="#">
+              <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="stopID">
+                <label class="mdl-textfield__label" for="sample3">Stop ID...</label>
+              </div>
+            </form>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="save">
+              Save
+            </button>
+          </div>
+
+            <h3>Your Tracker</h3>
+            <h6>Stops you previously saved</h6>
+            <select id="yourList">
+              <option select = "selected">Your Stops</option>
+            </select>
+             <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" id="yourTimes">
+              Enter
+            </button>
+            <hr>
+            <div id = "tracker">
+              
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/dexie@latest/dist/dexie.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("#output").html("");
+        $("#inputs").hide();
+         $("#screen1").show();
+
+      $("#link1").on("click", function() {
+        $(".screen").hide();
+        $("#screen1").show();
+      }); 
+
+      $("#link2").on("click", function() {
+        $(".screen").hide();
+        $("#screen2").show();
+      }); 
+
+      $("#link3").on("click", function() {
+        $(".screen").hide();
+        $("#screen3").show();
+      });
+      
+      $("#tab1").on("click", function() {
+        $(".screen").hide();
+        $("#screen1").show();
+      }); 
+
+      $("#tab2").on("click", function() {
+        $(".screen").hide();
+        $("#screen2").show();
+      }); 
+
+      $("#tab3").on("click", function() {
+        $(".screen").hide();
+        $("#screen3").show();
+      });
+       $('.mdl-navigation__link').click(function() {
+
+        //  the drawer
+        $('.mdl-layout__drawer').toggleClass('is-visible');
+
+        // the transparent overlay that shows when you open the drawer
+        $('.mdl-layout__obfuscator').toggleClass('is-visible');
+
+      });
+        var apiPassThruUrl = "https://polar-garden-75406.herokuapp.com/apiPassThru.php";
+
+        var apiEndpoint = "http://ctabustracker.com/bustime/api/v2/getpredictions";
+
+        var rt;
+        if ($("#stopclick").val() == "8417", "8195") {
+          rt = "49";
+        }
+        else {
+          rt = "152";
+        }
+        var endpoint = "http://www.ctabustracker.com/bustime/api/v2/getroutes";
+
+        $.ajax({
+          url: apiPassThruUrl,
+          dataType: "json",
+          method: 'GET',
+          data: {
+            "apiEndpoint": endpoint,
+            "key": "LZCWiNqYNzjfdW9F9hS82YsfW",
+            "format": "json"
+          }
+        }).done(function(data) {
+          console.log(data);
+          $.each(data["bustime-response"]["routes"], function(i, v) {
+            $("#routeClick").append("<option value =" + v.rt + ">#" + v.rt + " " + v.rtnm + "</option>");
+
+          });
+        });
+        $("#route").click(function() {
+          var routes = $("#routeClick").val();
+          $("#inputs").show();
+          window.open("http://www.transitchicago.com/assets/1/bus_stop_lists/" + routes + ".htm");
+        })
+
+        var db = new Dexie('MyStop');
+
+        // Define a schema
+        db.version(1).stores({
+          stops: 'ID, routes'
+        });
+        $("#save").click(function() {
+          db.stops.add({
+            ID: $("#stopID").val(),
+            routes: $("#routeNum").val()
+          });
+          $("#stopID").val('');
+          $("#routeNum").val('');
+           db.stops.each(function(stop) {
+            var newStop = "<option value = " + stop.ID + ">#" + stop.routes + " ID:"+ stop.ID +"</option>";
+            $("#yourList").append(newStop);
+          });
+        });
+        db.stops.each(function(stop) {
+            var newStop = "<option value = " + stop.ID + ">#" + stop.routes + " ID:"+ stop.ID +"</option>";
+            $("#yourList").append(newStop);
+          });
+        $("#yourTimes").click(function() {
+          console.log("clicks");
+          $("#tracker").empty();
+          $.ajax({
+            url: apiPassThruUrl,
+            dataType: "json",
+            method: 'GET',
+            data: {
+              "apiEndpoint": apiEndpoint,
+              "key": "LZCWiNqYNzjfdW9F9hS82YsfW",
+              "stpid": $("#yourList").val(),
+              "format": "json"
+            }
+          }).done(function(data) {
+            console.log(data);
+
+
+            $.each(data["bustime-response"]["prd"], function(i, v) {
+              var prediction = "Minutes Away: " + v.prdctdn
+              console.log(prediction);
+              if (v.prdctdn !== "DUE" && v.prdctdn !== "DLY") {
+
+                $("#tracker").append(
+                  "<div class='mdl-card__title mdl-card--expand'>" +
+                  "<h2 class='mdl-card__title-text'>" + prediction + "</h2>" +
+                  "</div>" +
+                  "<div class='mdl-card__supporting-text'> Stop: " + v.stpnm +
+                  "<br>Stop ID: " + v.stpid +
+                  "<br>Direction: " + v.rtdir +
+                  "<br>Prediction Time: " + v.prdtm +
+                  "<br></div><hr>" +
+                  "</div>");
+              }
+              else if (v.prdctdn == "DUE") {
+                prediction = "Due";
+                $("#tracker").append(
+                  "<div class='mdl-card__title mdl-card--expand'>" +
+                  "<h2 class='mdl-card__title-text'>" + prediction + "</h2>" +
+                  "</div>" +
+                  "<div class='mdl-card__supporting-text'> Stop: " + v.stpnm +
+                  "<br>Stop ID: " + v.stpid +
+                  "<br>Direction: " + v.rtdir +
+                  "<br>Prediction Time: " + v.prdtm +
+                  "<br></div><hr>" +
+                  "</div>");
+              }
+              else if (v.prdctdn == "DLY") {
+                prediction = "Delayed";
+                $("#tracker").append(
+                  "<div class='mdl-card__title mdl-card--expand'>" +
+                  "<h2 class='mdl-card__title-text'>" + prediction + "</h2>" +
+                  "</div>" +
+                  "<div class='mdl-card__supporting-text'> Stop: " + v.stpnm +
+                  "<br>Stop ID: " + v.stpid +
+                  "<br>Direction: " + v.rtdir +
+                  "<br>Prediction Time: " + v.prdtm +
+                  "<br></div><hr>" +
+                  "</div>");
+              }
+            });
+          });
+        });
+          
+        $("#times").click(function() {
+          $("#output").empty();
+
+          $.ajax({
+            url: apiPassThruUrl,
+            dataType: "json",
+            method: 'GET',
+            data: {
+              "apiEndpoint": apiEndpoint,
+              "key": "LZCWiNqYNzjfdW9F9hS82YsfW",
+              "stpid": $("#stopClick").val(),
+              "rtnm": rt,
+              "format": "json"
+            }
+          }).done(function(data) {
+            console.log(data);
+
+
+            $.each(data["bustime-response"]["prd"], function(i, v) {
+              var prediction = "Minutes Away: " + v.prdctdn
+              if (v.prdctdn !== "DUE" && v.prdctdn !== "DLY") {
+
+                $("#output").append(
+                  "<div class='mdl-card__title mdl-card--expand'>" +
+                  "<h2 class='mdl-card__title-text'>" + prediction + "</h2>" +
+                  "</div>" +
+                  "<div class='mdl-card__supporting-text'> Stop: " + v.stpnm +
+                  "<br>Stop ID: " + v.stpid +
+                  "<br>Direction: " + v.rtdir +
+                  "<br>Prediction Time: " + v.prdtm +
+                  "<br></div><hr>" +
+                  "</div>");
+              }
+              else if (v.prdctdn == "DUE") {
+                prediction = "Due";
+                $("#output").append(
+                  "<div class='mdl-card__title mdl-card--expand'>" +
+                  "<h2 class='mdl-card__title-text'>" + prediction + "</h2>" +
+                  "</div>" +
+                  "<div class='mdl-card__supporting-text'> Stop: " + v.stpnm +
+                  "<br>Stop ID: " + v.stpid +
+                  "<br>Direction: " + v.rtdir +
+                  "<br>Prediction Time: " + v.prdtm +
+                  "<br></div><hr>" +
+                  "</div>");
+              }
+              else if (v.prdctdn == "DLY") {
+                prediction = "Delayed";
+                $("#output").append(
+                  "<div class='mdl-card__title mdl-card--expand'>" +
+                  "<h2 class='mdl-card__title-text'>" + prediction + "</h2>" +
+                  "</div>" +
+                  "<div class='mdl-card__supporting-text'> Stop: " + v.stpnm +
+                  "<br>Stop ID: " + v.stpid +
+                  "<br>Direction: " + v.rtdir +
+                  "<br>Prediction Time: " + v.prdtm +
+                  "<br></div><hr>" +
+                  "</div>");
+              }
+            });
+          });
+        });
+      });
+    </script>
+</body>
+
+</html>

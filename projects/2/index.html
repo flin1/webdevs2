@@ -31,39 +31,7 @@
   <br>
   <p> Here you can find the times for the next Addison or Western Bus </p>
   <br>
-  <h3>List of Chicago Transit Authority Bus Routes</h3>
  
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  
-  
-  <script>
-    $(function() {
-
-
-      var apiPassThruUrl = "https://polar-garden-75406.herokuapp.com/apiPassThru.php";
-
-      var apiEndpoint = "http://ctabustracker.com/bustime/api/v2/getroutes";
-
-      $.ajax({
-        url: apiPassThruUrl,
-        dataType: "json",
-        method: 'GET',
-        data: {
-          "apiEndpoint": apiEndpoint,
-          "key": "RVehUg4BC2bGGFHGEQMSv3dhE",
-          "format": "json"
-        }
-      }).done(function(data) {
-        console.log(data);
-        $.each(data["bustime-response"]["routes"], function(i, v) {
-          $("body").append("Route #" + v.rt + ", " + v.rtnm + "<br>");
-
-        });
-
-      });
-    });
-  </script>
-
 </body>
 
 </html>
