@@ -222,6 +222,7 @@
         stops: 'ID, routes'
       });
       $("#save").click(function() {
+        $("#yourList").empty();
         db.stops.add({
           ID: $("#stopID").val(),
           routes: $("#routeNum").val()
