@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Drawing With Canvas</title>
+    <style>
+        canvas {
+            border: #333 10px solid;
+        }
+    </style>
+
+</head>
+
+<body>
+    <canvas id="myCanvas" width="550px" height="350px"></canvas>
+    <script>
+        var mainCanvas = document.getElementById("myCanvas");
+        var mainContext = mainCanvas.getContext("2d");
+
+        var canvasWidth = mainCanvas.width;
+        var canvasHeight = mainCanvas.height;
+
+        function draw() {
+            mainContext.beginPath();
+            mainContext.arc(275, 165, 93, 0, 2 * Math.PI, true);
+            mainContext.closePath();
+            mainContext.fillStyle = "#DB4437";
+            mainContext.fill();
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+
+            mainContext.beginPath();
+            mainContext.arc(275, 165, 35, 0, 2 * Math.PI, true);
+            mainContext.closePath();
+
+
+            mainContext.lineWidth = 15;
+            mainContext.strokeStyle = "#FFFFFF";
+            mainContext.stroke();
+
+            mainContext.beginPath();
+            mainContext.moveTo(240, 165);
+            mainContext.lineTo(240, 70);
+            mainContext.closePath();
+
+
+            mainContext.lineWidth = 15;
+            mainContext.strokeStyle = "#FFFFFF";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(160, 270);
+            mainContext.lineTo(160,330);
+            mainContext.closePath();
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.arc(175, 310, 15, 0, 2 * Math.PI, true);
+            mainContext.closePath();
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.arc(225, 310, 17,0,(Math.PI / 180) * 45, true);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(210,309);
+            mainContext.lineTo(246.5,309);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.arc(275, 310, 15, 0, 2 * Math.PI, true);
+            mainContext.closePath();
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(290,290);
+            mainContext.lineTo(290,330);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(300,300);
+            mainContext.lineTo(340,300);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(320,270);
+            mainContext.lineTo(320,330);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(350,285);
+            mainContext.lineTo(380,285);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(350,280);
+            mainContext.lineTo(350,300);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(375,300);
+            mainContext.lineTo(375,320);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(345,305);
+            mainContext.lineTo(380,305);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+            
+            mainContext.beginPath();
+            mainContext.moveTo(380,325);
+            mainContext.lineTo(345,325);
+
+
+            mainContext.lineWidth = 10;
+            mainContext.strokeStyle = "#DB4437";
+            mainContext.stroke();
+        }
+        draw();
+    </script>
+</body>
+
+</html>
